@@ -1,0 +1,34 @@
+name: Build Macrow.exe
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pynput pillow pystray pyinstaller
+
+    - name: Build executable
+      run: |
+        pyinstaller --onefile --noconsole --icon=crow_icon.ico macrow.py
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Macrow-exe
+        path: dist/macrow.exe
