@@ -28,7 +28,7 @@ jobs:
         pyinstaller --onefile --noconsole --icon=crow_icon.ico macrow.py
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
         name: Macrow-exe
         path: dist/macrow.exe
